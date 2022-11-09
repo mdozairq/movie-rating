@@ -7,21 +7,21 @@ import ViewTable from './ViewTable';
 const LeftTabs = ({ data }) => {
   const [langs, setLangs] = useState([]);
   const [filterData, setFilterData] = useState([]);
-  const [key, setKey] = useState();
+  const [key, setKey] = useState('home');
   useEffect(() => {
-    console.log("data Effect", data);
     if (data) {
       setLangs([...new Set(data.map(item => item.language))]);
-      if (langs)
-        setKey(langs[0]);
     }
   }, [data])
 
+  useEffect(() => {
+    if (langs) {
+      setKey(langs[0]);
+    }
+  }, [langs])
 
   useEffect(() => {
-    console.log("i am called", key);
     setFilterData(data.filter((item) => item.language === key));
-    console.log("lf here: ", key, filterData);
   }, [key])
 
   return (

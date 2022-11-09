@@ -4,25 +4,27 @@ import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import { Rate } from 'antd';
-import "antd/dist/antd.css";
 
 const RateForm = ({ addRating, rating, setRating, lang, clearForm }) => {
     const [image, setImage] = useState("");
     const uploadImage = () => {
-        const data = new FormData()
-        data.append("file", image)
-        data.append("upload_preset", process.env.CLOUD_PRESET)
-        data.append("cloud_name", process.env.CLOUD_NAME)
-        fetch(process.env.CLOUD_URL, {
-            method: "post",
-            body: data
-        })
-            .then(resp => resp.json())
-            .then(data => {
-                console.log("dt:", data)
-                setRating({ ...rating, url: data.secure_url })
-            })
-            .catch(err => console.log(err))
+        if (image) {
+            const data = new FormData()
+            data.append("file", image)
+            data.append("upload_preset", "c023wt96")
+            data.append("cloud_name", "ddbsgfcsx")
+            if (data)
+                fetch("https://api.cloudinary.com/v1_1/ddbsgfcsx/image/upload", {
+                    method: "post",
+                    body: data
+                })
+                    .then(resp => resp.json())
+                    .then(data => {
+                        console.log("dt:", data)
+                        setRating({ ...rating, url: data.secure_url })
+                    })
+                    .catch(err => console.log(err))
+        }
     }
 
     useEffect(() => {
@@ -43,6 +45,7 @@ const RateForm = ({ addRating, rating, setRating, lang, clearForm }) => {
                         placeholder="Movie Title"
                         value={rating.title}
                         onChange={(e) => setRating({ ...rating, title: e.target.value })}
+                        required
                     />
                 </Col>
             </Form.Group>
@@ -53,6 +56,7 @@ const RateForm = ({ addRating, rating, setRating, lang, clearForm }) => {
                     rows={3}
                     value={rating.description}
                     onChange={(e) => setRating({ ...rating, description: e.target.value })}
+                    required
                 />
             </Form.Group>
             Images:

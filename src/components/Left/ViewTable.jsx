@@ -26,7 +26,6 @@ const onChange = (pagination, filters, sorter, extra) => {
   console.log('params', pagination, filters, sorter, extra);
 };
 const ViewTable = ({ newdata }) => {
-  console.log("pp", newdata);
   return (<Table columns={columns} dataSource={newdata} onChange={onChange} />);
 }
 

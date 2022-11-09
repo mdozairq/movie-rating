@@ -24,7 +24,6 @@ const Content = () => {
 
     useEffect(() => {
         let getData = JSON.parse(localStorage.getItem('formValues'));
-        console.log("ggd: ",getData);
         if (getData)
             setData(getData);
     }, [])
